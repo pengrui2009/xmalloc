@@ -10,6 +10,8 @@
 #ifndef _LIST_H
 #define _LIST_H
 
+#include <stdio.h>
+
 //链表头定义
 struct list_head {
 	struct list_head *next, *prev;

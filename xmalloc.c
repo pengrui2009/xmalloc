@@ -1,10 +1,10 @@
-#include "xmalloc.h"
+#include "datatypes.h"
 #include <string.h>
 #include <stdlib.h>
 
 static xmalloc_block_list_t blockinfo;
 
-void malloc_init() {
+void xmalloc_init() {
     
     INIT_LIST_HEAD(&blockinfo.list_idle);
     INIT_LIST_HEAD(&blockinfo.list_busy);
@@ -14,7 +14,7 @@ void malloc_init() {
 }
 
 //实现目标函数
-void *malloc_hook(size_t size, const char* file, int line)
+void *xmalloc_hook(size_t size, const char* file, int line)
 {
     //这里还是通过文件的方式进行识别
     xmalloc_block_node_t *pnode;
@@ -62,7 +62,7 @@ void *malloc_hook(size_t size, const char* file, int line)
     return ptr;
 }
 
-void free_hook(void *ptr, const char* file, int line)
+void xfree_hook(void *ptr, const char* file, int line)
 {
     int flag = 0;
     xmalloc_block_node_t *pnode;
@@ -98,7 +98,7 @@ void free_hook(void *ptr, const char* file, int line)
     pthread_mutex_unlock(&blockinfo.mutex);
 }
 
-void malloc_print() 
+void xmalloc_print() 
 {
     struct list_head *plist_busy;
     xmalloc_block_node_t *pnode;
@@ -114,4 +114,19 @@ void malloc_print()
     pthread_mutex_unlock(&blockinfo.mutex);
 }
 
+void xmalloc_deinit()
+{
+    struct list_head *plist_busy;
+    xmalloc_block_node_t *pnode;
+    pthread_mutex_lock(&blockinfo.mutex);
+    
+    plist_busy = &blockinfo.list_busy;
+
+    list_for_each_entry(pnode, plist_busy, list) {
+        if (pnode->data_ptr->ptr)
+            free(pnode->data_ptr->ptr);
+    }
+
+    pthread_mutex_unlock(&blockinfo.mutex);
+}
 
