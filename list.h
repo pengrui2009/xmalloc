@@ -240,7 +240,7 @@ static inline void list_splice_tail_init(struct list_head *list,
 /*************************************************
   链表遍历功能
 *************************************************/
-#define offsetof(TYPE, MEMBER) ((u32) &((TYPE *)0)->MEMBER)
+#define offsetof(TYPE, MEMBER) ((unsigned int) &((TYPE *)0)->MEMBER)
 
 #define container_of(ptr, type, member) ({			\
 	const typeof( ((type *)0)->member ) *__mptr = (ptr);	\
