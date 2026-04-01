@@ -1,6 +1,8 @@
 #ifndef XMALLOC_H
 #define XMALLOC_H
 
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
