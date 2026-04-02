@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[]) {
     xmalloc_init();
-    void *data_ptr = (void *)malloc(10);
+    void *data_ptr = (void *)xmalloc(10);
 
     // xfree(data_ptr);
     xmalloc_print();
