@@ -18,8 +18,8 @@ extern void xmalloc_deinit();
 #endif
 
 //宏定义实现代码中调用malloc/free时调用我们目标函数
-#define malloc(size)         xmalloc_hook(size, __FILE__, __LINE__)
-#define free(p)              xfree_hook(p,  __FILE__, __LINE__)
+#define xmalloc(size)         xmalloc_hook(size, __FILE__, __LINE__)
+#define xfree(p)              xfree_hook(p,  __FILE__, __LINE__)
 
 
 
